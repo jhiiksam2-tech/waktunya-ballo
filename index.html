@@ -437,7 +437,7 @@
       }
 
       totalAmountEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-      const batu = (total / 60000).toFixed(1);
+      const batu = Math.floor(total / 60000);
       totalBatuEl.textContent = `${batu} Batu`;
       contributorCount.textContent = `${count} Orang`;
     });
