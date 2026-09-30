@@ -387,7 +387,12 @@
     const contributorCount = document.getElementById('contributorCount');
     const statusMsg = document.getElementById('statusMsg');
 
-    // Fungsi Suara (Text-To-Speech)
+    // Audio Sound Effects Meme
+    const audioBosi = new Audio('https://www.myinstants.com/media/sounds/beri-hormat-kepada-bos-besar.mp3'); 
+    const audioMiskin = new Audio('https://www.myinstants.com/media/sounds/minggir-lu-miskin.mp3'); 
+    const audioAnjaii = new Audio('https://www.myinstants.com/media/sounds/anjay.mp3'); 
+
+    // Suara Google Text-To-Speech
     function speakNotice(name, amount) {
       if (!('speechSynthesis' in window)) return;
 
@@ -395,18 +400,29 @@
       if (amount >= 50000) {
         text = `Mantap! ${name} patungan ${amount} rupiah. Menyala Sultanku!`;
       } else if (amount <= 15000) {
-        text = `Waduh, ${name} cuma patungan ${amount} rupiah. Kasihan banget sih!`;
+        text = `Waduh, ${name} cuma patungan ${amount} rupiah. Parah banget!`;
       } else {
         text = `Terima kasih ${name} sudah patungan ${amount} rupiah.`;
       }
 
-      window.speechSynthesis.cancel(); // Hentikan suara sebelumnya jika ada
+      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'id-ID'; // Bahasa Indonesia
-      utterance.rate = 0.95;    // Kecepatan bicara
-      utterance.pitch = 1.0;
-
+      utterance.lang = 'id-ID';
+      utterance.rate = 0.95;
       window.speechSynthesis.speak(utterance);
+    }
+
+    function playMemeSound(amount) {
+      if (amount >= 50000) {
+        audioBosi.currentTime = 0;
+        audioBosi.play().catch(() => {});
+      } else if (amount <= 15000) {
+        audioMiskin.currentTime = 0;
+        audioMiskin.play().catch(() => {});
+      } else if (amount >= 20000) {
+        audioAnjaii.currentTime = 0;
+        audioAnjaii.play().catch(() => {});
+      }
     }
 
     form.addEventListener('submit', (ev) => {
@@ -425,8 +441,9 @@
         amount: amount,
         timestamp: Date.now()
       }).then(() => {
-        // Panggil suara otomatis saat berhasil input
-        speakNotice(name, amount);
+        // Putar suara meme + suara ucapan
+        playMemeSound(amount);
+        setTimeout(() => speakNotice(name, amount), 1500);
 
         nameInput.value = '';
         amountInput.value = '';
