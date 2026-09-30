@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ballo Share - Acara Minum Ballo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-color: #f4efe6;
@@ -13,91 +13,359 @@
       --text-secondary: #64748b;
       --primary-blue: #2563eb;
       --primary-blue-hover: #1d4ed8;
-      --danger-red: #ef4444;
       --header-navy: #0f172a;
       --border-color: #e2e8f0;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --danger-red: #ef4444;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-primary); padding: 16px; min-height: 100vh; }
-    .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
-    
-    .card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .header-card { background: var(--header-navy); color: white; text-align: center; }
-    .header-card h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
-    .header-card p { font-size: 0.875rem; color: #94a3b8; }
-    
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .stat-box { background: #f8fafc; border-radius: 12px; padding: 12px; text-align: center; border: 1px solid var(--border-color); }
-    .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; }
-    .stat-value { font-size: 1.25rem; font-weight: 700; color: var(--primary-blue); margin-top: 4px; }
-    
-    .form-group { margin-bottom: 12px; }
-    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; }
-    input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 1rem; outline: none; }
-    input:focus { border-color: var(--primary-blue); }
-    
-    .btn { width: 100%; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s; }
-    .btn:hover { background: var(--primary-blue-hover); }
-    
-    .entry-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .entry-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border-color); }
-    .entry-info { display: flex; flex-direction: column; }
-    .entry-name { font-weight: 600; font-size: 0.95rem; }
-    .entry-amount { font-size: 0.85rem; color: var(--text-secondary); }
-    
-    .actions { display: flex; gap: 6px; }
-    .btn-sm { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; }
-    .btn-edit { background: #e2e8f0; color: #334155; }
-    .btn-delete { background: #fee2e2; color: var(--danger-red); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-    .status-msg { font-size: 0.85rem; text-align: center; margin-top: 8px; }
-    .err { color: var(--danger-red); }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      background-color: var(--header-navy);
+      color: #ffffff;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-icon {
+      font-size: 1.3rem;
+    }
+
+    .live-tag {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      background-color: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(52, 211, 153, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+
+    /* Main Container */
+    .container {
+      padding: 24px 20px;
+      flex: 1;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .title-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .title-section h1 {
+      font-size: 1.6rem;
+      margin: 0 0 6px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .title-section p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Stat Cards */
+    .totals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 16px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+    }
+
+    /* Form Styles */
+    .form-card {
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s;
+      background: #f8fafc;
+    }
+
+    input:focus {
+      border-color: var(--primary-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    button:hover {
+      background-color: var(--primary-blue-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Entries Section */
+    .entries-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .entries-header h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .badge {
+      background: #e0e7ff;
+      color: var(--primary-blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .entries-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .entry-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .entry-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .entry-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .entry-amount {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .btn-delete {
+      background: #fee2e2;
+      color: var(--danger-red);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+      box-shadow: none;
+      transition: background 0.2s;
+    }
+
+    .btn-delete:hover {
+      background: #fca5a5;
+    }
+
+    .status-msg {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    .err { color: #ef4444; }
+
+    footer {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: auto;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
 
+  <nav class="navbar">
+    <div class="brand">
+      <span class="brand-icon">🍻</span>
+      <span>Ramsslinks</span>
+    </div>
+    <div class="live-tag">
+      <span class="pulse"></span>
+      LIVE REALTIME
+    </div>
+  </nav>
+
   <div class="container">
-    <div class="card header-card">
-      <h1>🍻 Patungan Ballo</h1>
-      <p>Batu = Rp 60.000</p>
+    <div class="title-section">
+      <h1>Patungan Ballo</h1>
+      <p>Hitungan Otomatis & Transparan (1 Batu = Rp 60.000)</p>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-box">
-        <div class="stat-label">Total Terkumpul</div>
+    <div class="totals">
+      <div class="card stat-card">
+        <div class="stat-label">Total Uang</div>
         <div class="stat-value" id="totalAmount">Rp 0</div>
       </div>
-      <div class="stat-box">
+      <div class="card stat-card">
         <div class="stat-label">Total Batu</div>
         <div class="stat-value" id="totalBatu">0 Batu</div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card form-card">
       <form id="contribForm">
         <div class="form-group">
-          <label>Nama</label>
-          <input type="text" id="nameInput" placeholder="Masukkan nama" required>
+          <label for="nameInput">Nama Kontributor</label>
+          <input type="text" id="nameInput" placeholder="Masukkan nama..." required autocomplete="off">
         </div>
         <div class="form-group">
-          <label>Nominal (Rp)</label>
+          <label for="amountInput">Nominal Patungan (Rp)</label>
           <input type="number" id="amountInput" placeholder="Contoh: 60000" required>
         </div>
-        <button type="submit" class="btn" id="submitBtn">Tambah Patungan</button>
+        <button type="submit" id="submitBtn">Tambah Patungan</button>
       </form>
       <div id="statusMsg" class="status-msg"></div>
     </div>
 
-    <div class="card">
-      <h3 style="font-size: 1rem; margin-bottom: 12px;">Daftar Kontributor</h3>
-      <ul class="entry-list" id="entryList"></ul>
+    <div class="entries-section">
+      <div class="entries-header">
+        <h2>Daftar Pembayar</h2>
+        <span class="badge" id="contributorCount">0 Orang</span>
+      </div>
+      <ul class="entries-list" id="entryList"></ul>
     </div>
   </div>
 
+  <footer>
+    &copy; Ramsslinks Event Platform — Realtime Synchronization
+  </footer>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       databaseURL: "https://link-87521-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -113,64 +381,56 @@
     const entryList = document.getElementById('entryList');
     const totalAmountEl = document.getElementById('totalAmount');
     const totalBatuEl = document.getElementById('totalBatu');
+    const contributorCount = document.getElementById('contributorCount');
     const statusMsg = document.getElementById('statusMsg');
 
-    let editKey = null;
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
       const name = nameInput.value.trim();
       const amount = Number(amountInput.value);
 
-      if (!name || amount <= 0) return;
-
-      if (editKey) {
-        // Update data
-        update(ref(db, `entries/${editKey}`), { name, amount })
-          .then(() => {
-            resetForm();
-            statusMsg.textContent = 'Data berhasil diubah!';
-          });
-      } else {
-        // Tambah data baru
-        push(entriesRef, { name, amount, timestamp: Date.now() })
-          .then(() => {
-            resetForm();
-            statusMsg.textContent = 'Berhasil ditambahkan!';
-          });
+      if (!name || !(amount >= 0)) {
+        statusMsg.textContent = 'Isi nama dan nominal dengan benar';
+        statusMsg.classList.add('err');
+        return;
       }
+
+      push(entriesRef, {
+        name: name,
+        amount: amount,
+        timestamp: Date.now()
+      }).then(() => {
+        nameInput.value = '';
+        amountInput.value = '';
+        statusMsg.classList.remove('err');
+        statusMsg.textContent = 'Berhasil dicatat secara live!';
+        setTimeout(() => { statusMsg.textContent = ''; }, 3000);
+      }).catch(() => {
+        statusMsg.textContent = 'Gagal menyimpan ke server.';
+        statusMsg.classList.add('err');
+      });
     });
 
-    function resetForm() {
-      nameInput.value = '';
-      amountInput.value = '';
-      editKey = null;
-      document.getElementById('submitBtn').textContent = 'Tambah Patungan';
-      setTimeout(() => { statusMsg.textContent = ''; }, 3000);
-    }
-
-    // Read Realtime Data
     onValue(entriesRef, (snapshot) => {
       entryList.innerHTML = '';
       let total = 0;
+      let count = 0;
       const data = snapshot.val();
 
       if (data) {
         Object.keys(data).forEach((key) => {
           const item = data[key];
           total += item.amount;
+          count++;
 
           const li = document.createElement('li');
           li.className = 'entry-item';
           li.innerHTML = `
-            <div class="entry-info">
+            <div class="entry-details">
               <span class="entry-name">${item.name}</span>
               <span class="entry-amount">Rp ${item.amount.toLocaleString('id-ID')}</span>
             </div>
-            <div class="actions">
-              <button class="btn-sm btn-edit" onclick="startEdit('${key}', '${item.name}', ${item.amount})">Edit</button>
-              <button class="btn-sm btn-delete" onclick="deleteEntry('${key}')">Hapus</button>
-            </div>
+            <button class="btn-delete" title="Hapus" onclick="deleteEntry('${key}')">🗑️</button>
           `;
           entryList.appendChild(li);
         });
@@ -179,21 +439,13 @@
       totalAmountEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
       const batu = (total / 60000).toFixed(1);
       totalBatuEl.textContent = `${batu} Batu`;
+      contributorCount.textContent = `${count} Orang`;
     });
 
-    // Global Window Functions for Inline Onclick
     window.deleteEntry = (key) => {
-      if (confirm('Yakin mau menghapus nama ini?')) {
+      if (confirm('Yakin ingin menghapus nama ini dari daftar?')) {
         remove(ref(db, `entries/${key}`));
       }
-    };
-
-    window.startEdit = (key, name, amount) => {
-      nameInput.value = name;
-      amountInput.value = amount;
-      editKey = key;
-      document.getElementById('submitBtn').textContent = 'Simpan Perubahan';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   </script>
 </body>
