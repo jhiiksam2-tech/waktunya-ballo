@@ -256,6 +256,9 @@
     .entry-name {
       font-weight: 700;
       font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .entry-amount {
@@ -338,11 +341,11 @@
     <div class="card form-card">
       <form id="contribForm">
         <div class="form-group">
-          <label for="nameInput">Nama Kontributor</label>
+          <label for="nameInput">Nama Petarung</label>
           <input type="text" id="nameInput" placeholder="Masukkan nama..." required autocomplete="off">
         </div>
         <div class="form-group">
-          <label for="amountInput">Nominal Patungan (Rp)</label>
+          <label for="amountInput">Berapa mau di ck?</label>
           <input type="number" id="amountInput" placeholder="Contoh: 60000" required>
         </div>
         <button type="submit" id="submitBtn">Tambah Patungan</button>
@@ -423,11 +426,14 @@
           total += item.amount;
           count++;
 
+          const isKing = item.amount >= 50000;
+          const crownIcon = isKing ? '👑' : '';
+
           const li = document.createElement('li');
           li.className = 'entry-item';
           li.innerHTML = `
             <div class="entry-details">
-              <span class="entry-name">${item.name}</span>
+              <span class="entry-name">${item.name} ${crownIcon}</span>
               <span class="entry-amount">Rp ${item.amount.toLocaleString('id-ID')}</span>
             </div>
             <button class="btn-delete" title="Hapus" onclick="deleteEntry('${key}')">🗑️</button>
