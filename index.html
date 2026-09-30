@@ -426,14 +426,18 @@
           total += item.amount;
           count++;
 
-          const isKing = item.amount >= 50000;
-          const crownIcon = isKing ? '👑' : '';
+          let badgeIcon = '';
+          if (item.amount >= 50000) {
+            badgeIcon = '👑';
+          } else if (item.amount <= 15000) {
+            badgeIcon = '🤣';
+          }
 
           const li = document.createElement('li');
           li.className = 'entry-item';
           li.innerHTML = `
             <div class="entry-details">
-              <span class="entry-name">${item.name} ${crownIcon}</span>
+              <span class="entry-name">${item.name} ${badgeIcon}</span>
               <span class="entry-amount">Rp ${item.amount.toLocaleString('id-ID')}</span>
             </div>
             <button class="btn-delete" title="Hapus" onclick="deleteEntry('${key}')">🗑️</button>
