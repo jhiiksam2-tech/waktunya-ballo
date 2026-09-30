@@ -407,9 +407,14 @@
         // No 1: Suara Google "Terimakasih banyak deng haji [nama]"
         speakNotice(`Terimakasih banyak deng haji ${name}`);
       } else if (amount <= 15000) {
-        // No 3: Sound meme "Minggir lu miskin"
+        // No 3: Sound meme Speed "Minggir lu miskin!" dulu
         audioMiskin.currentTime = 0;
         audioMiskin.play().catch(e => console.log('Audio error:', e));
+
+        // Disambung Suara Google setelah audio Speed selesai (1.8 detik)
+        setTimeout(() => {
+          speakNotice(`Waduh, ${name} cuma patungan ${amount} rupiah. Parah banget!`);
+        }, 1800);
       } else {
         // No 2: Suara Google "Mantap [nama]"
         speakNotice(`Mantap ${name}`);
@@ -471,7 +476,7 @@
               <span class="entry-name">${item.name} ${badgeIcon}</span>
               <span class="entry-amount">Rp ${item.amount.toLocaleString('id-ID')}</span>
             </div>
-            <button class="btn-delete" title="Hapus" onclick="deleteEntry('${key}')">🗑️</button>
+            <button class="btn-delete" title="Hapus" onclick="deleteEntry('${key}')">🗑️️</button>
           `;
           entryList.appendChild(li);
         });
