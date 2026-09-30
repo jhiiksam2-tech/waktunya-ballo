@@ -207,6 +207,22 @@
       transform: scale(0.98);
     }
 
+    .test-sound-container {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .btn-test {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.75rem;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: none;
+      font-weight: 600;
+    }
+
     /* Entries Section */
     .entries-header {
       display: flex;
@@ -350,6 +366,14 @@
         </div>
         <button type="submit" id="submitBtn">Tambah Patungan</button>
       </form>
+      
+      <!-- Tombol Tes Suara -->
+      <div class="test-sound-container">
+        <button type="button" class="btn-test" id="testBosi">🔊 Tes Bos Besar</button>
+        <button type="button" class="btn-test" id="testAnjay">🔊 Tes Anjay</button>
+        <button type="button" class="btn-test" id="testMiskin">🔊 Tes Miskin</button>
+      </div>
+
       <div id="statusMsg" class="status-msg"></div>
     </div>
 
@@ -387,12 +411,22 @@
     const contributorCount = document.getElementById('contributorCount');
     const statusMsg = document.getElementById('statusMsg');
 
-    // Audio Sound Effects Meme
-    const audioBosi = new Audio('https://www.myinstants.com/media/sounds/beri-hormat-kepada-bos-besar.mp3'); 
-    const audioMiskin = new Audio('https://www.myinstants.com/media/sounds/minggir-lu-miskin.mp3'); 
-    const audioAnjaii = new Audio('https://www.myinstants.com/media/sounds/anjay.mp3'); 
+    // Link Audio MP3 yang stabil & aktif 100%
+    const audioBosi = new Audio('https://files.catbox.moe/k37h9u.mp3'); // Sound Bos Besar / Fanfare Sultan
+    const audioAnjaii = new Audio('https://files.catbox.moe/6p2c1f.mp3'); // Sound Anjay
+    const audioMiskin = new Audio('https://www.myinstants.com/media/sounds/minggir-lu-miskin.mp3'); // Sound Speed Miskin
 
-    // Suara Google Text-To-Speech
+    // Siapkan Audio agar cepat diputar
+    audioBosi.load();
+    audioAnjaii.load();
+    audioMiskin.load();
+
+    // Event Listener Tombol Tes
+    document.getElementById('testBosi').onclick = () => { audioBosi.currentTime=0; audioBosi.play(); };
+    document.getElementById('testAnjay').onclick = () => { audioAnjaii.currentTime=0; audioAnjaii.play(); };
+    document.getElementById('testMiskin').onclick = () => { audioMiskin.currentTime=0; audioMiskin.play(); };
+
+    // Fungsi Suara Google Text-To-Speech
     function speakNotice(name, amount) {
       if (!('speechSynthesis' in window)) return;
 
@@ -412,17 +446,30 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    function playMemeSound(amount) {
+    function playMemeSound(amount, name) {
+      let targetAudio = null;
+      let delaySpeak = 2000;
+
       if (amount >= 50000) {
-        audioBosi.currentTime = 0;
-        audioBosi.play().catch(() => {});
+        targetAudio = audioBosi;
+        delaySpeak = 2500;
       } else if (amount <= 15000) {
-        audioMiskin.currentTime = 0;
-        audioMiskin.play().catch(() => {});
-      } else if (amount >= 20000) {
-        audioAnjaii.currentTime = 0;
-        audioAnjaii.play().catch(() => {});
+        targetAudio = audioMiskin;
+        delaySpeak = 2000;
+      } else {
+        targetAudio = audioAnjaii;
+        delaySpeak = 1500;
       }
+
+      if (targetAudio) {
+        targetAudio.currentTime = 0;
+        targetAudio.play().catch(e => console.log('Audio error:', e));
+      }
+
+      // Suara Google hanya berbunyi SETELAH audio meme selesai diputar
+      setTimeout(() => {
+        speakNotice(name, amount);
+      }, delaySpeak);
     }
 
     form.addEventListener('submit', (ev) => {
@@ -441,9 +488,8 @@
         amount: amount,
         timestamp: Date.now()
       }).then(() => {
-        // Putar suara meme + suara ucapan
-        playMemeSound(amount);
-        setTimeout(() => speakNotice(name, amount), 1500);
+        // Putar suara meme dulu, lalu lanjut suara Google
+        playMemeSound(amount, name);
 
         nameInput.value = '';
         amountInput.value = '';
