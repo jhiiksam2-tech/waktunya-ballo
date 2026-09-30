@@ -1,433 +1,200 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ballo Share - Acara Minum Ballo</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Orbitron:wght@800&family=Syne:wght@800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-color: #f4efe6;
-    --card-bg: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --primary-blue: #2563eb;
-    --primary-blue-hover: #1d4ed8;
-    --header-navy: #0f172a;
-    --border-color: #e2e8f0;
-    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  }
-
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-  }
-
-  .wrap {
-    width: 100%;
-    max-width: 480px;
-    background: #faf7f2;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  /* Header Navbar */
-  .navbar {
-    background-color: var(--header-navy);
-    color: #ffffff;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  /* Logo RamssLinks - Font Keren & Warna Bunglon */
-  .ramss-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    animation: chameleon 4s linear infinite;
-  }
-
-  @keyframes chameleon {
-    0%   { color: #ff0055; text-shadow: 0 0 8px rgba(255, 0, 85, 0.6); }
-    20%  { color: #ff9900; text-shadow: 0 0 8px rgba(255, 153, 0, 0.6); }
-    40%  { color: #00ff66; text-shadow: 0 0 8px rgba(0, 255, 102, 0.6); }
-    60%  { color: #00e1ff; text-shadow: 0 0 8px rgba(0, 225, 255, 0.6); }
-    80%  { color: #9d00ff; text-shadow: 0 0 8px rgba(157, 0, 255, 0.6); }
-    100% { color: #ff0055; text-shadow: 0 0 8px rgba(255, 0, 85, 0.6); }
-  }
-
-  .nav-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Main Container */
-  .container {
-    padding: 24px 20px;
-    flex: 1;
-  }
-
-  .title-section {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .title-section h1 {
-    font-size: 1.5rem;
-    margin: 0 0 6px;
-    font-weight: 700;
-    color: #0f172a;
-  }
-  .title-section p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  /* Stat Cards */
-  .totals {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .totals .box {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: var(--shadow);
-  }
-  .box-icon {
-    font-size: 1.6rem;
-    background: #f1f5f9;
-    padding: 8px;
-    border-radius: 12px;
-  }
-  .box-info .num {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #0f172a;
-    display: block;
-  }
-  .box-info .lbl {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-  }
-
-  /* Box Khusus Batu */
-  .batu-box {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    color: #ffffff;
-    border-radius: 16px;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-  .batu-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .batu-info .icon { font-size: 1.5rem; }
-  .batu-text { font-size: 0.85rem; color: #94a3b8; }
-  .batu-count {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #38bdf8;
-  }
-
-  /* Form Section */
-  form {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  input {
-    font-family: inherit;
-    font-size: 0.95rem;
-    padding: 12px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background: #f8fafc;
-    color: var(--text-primary);
-    transition: all 0.2s;
-  }
-  input:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  }
-  button[type=submit] {
-    margin-top: 4px;
-    background: var(--primary-blue);
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  button[type=submit]:hover {
-    background: var(--primary-blue-hover);
-  }
-
-  .status {
-    font-size: 0.85rem;
-    min-height: 1.2em;
-    margin: -12px 0 16px;
-    text-align: center;
-    color: var(--text-secondary);
-  }
-  .status.err { color: #ef4444; }
-
-  /* Entry List */
-  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  li {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow);
-  }
-  .user-info { display: flex; align-items: center; gap: 12px; }
-  .avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #e2e8f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-  }
-  .user-details .name { font-weight: 600; font-size: 0.95rem; display: block; color: #0f172a; }
-  .user-details .amount { color: var(--primary-blue); font-weight: 700; font-size: 0.9rem; }
-  .empty { color: var(--text-secondary); font-size: 0.9rem; text-align: center; padding: 24px 0; }
-
-  footer {
-    padding: 16px 20px 24px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-  }
-
-  /* Font Keren Menyala */
-  .glowing-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #2563eb;
-    margin-top: 12px;
-    display: block;
-    letter-spacing: 2px;
-    animation: glow 1.5s ease-in-out infinite alternate;
-  }
-
-  @keyframes glow {
-    from {
-      text-shadow: 0 0 5px #2563eb, 0 0 10px #2563eb, 0 0 15px #3b82f6;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ballo Share - Acara Minum Ballo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f4efe6;
+      --card-bg: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --primary-blue: #2563eb;
+      --primary-blue-hover: #1d4ed8;
+      --danger-red: #ef4444;
+      --header-navy: #0f172a;
+      --border-color: #e2e8f0;
     }
-    to {
-      text-shadow: 0 0 10px #1d4ed8, 0 0 20px #60a5fa, 0 0 30px #93c5fd;
-    }
-  }
-</style>
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-primary); padding: 16px; min-height: 100vh; }
+    .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    
+    .card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .header-card { background: var(--header-navy); color: white; text-align: center; }
+    .header-card h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+    .header-card p { font-size: 0.875rem; color: #94a3b8; }
+    
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-box { background: #f8fafc; border-radius: 12px; padding: 12px; text-align: center; border: 1px solid var(--border-color); }
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; }
+    .stat-value { font-size: 1.25rem; font-weight: 700; color: var(--primary-blue); margin-top: 4px; }
+    
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 1rem; outline: none; }
+    input:focus { border-color: var(--primary-blue); }
+    
+    .btn { width: 100%; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+    .btn:hover { background: var(--primary-blue-hover); }
+    
+    .entry-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .entry-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border-color); }
+    .entry-info { display: flex; flex-direction: column; }
+    .entry-name { font-weight: 600; font-size: 0.95rem; }
+    .entry-amount { font-size: 0.85rem; color: var(--text-secondary); }
+    
+    .actions { display: flex; gap: 6px; }
+    .btn-sm { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; }
+    .btn-edit { background: #e2e8f0; color: #334155; }
+    .btn-delete { background: #fee2e2; color: var(--danger-red); }
+
+    .status-msg { font-size: 0.85rem; text-align: center; margin-top: 8px; }
+    .err { color: var(--danger-red); }
+  </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="navbar">
-    <div class="ramss-logo">RamssLinks</div>
-    <div class="nav-title"><span>🌴</span> Ballo Share</div>
-  </div>
-
   <div class="container">
-    <div class="title-section">
-      <h1>Acara Minum Ballo</h1>
-      <p>isimi nama ta' sama berapa ck ta ganggg</p>
+    <div class="card header-card">
+      <h1>🍻 Patungan Ballo</h1>
+      <p>Batu = Rp 60.000</p>
     </div>
 
-    <div class="totals">
-      <div class="box">
-        <div class="box-icon">👥</div>
-        <div class="box-info">
-          <span class="num" id="totalPeople">0</span>
-          <span class="lbl">Orang Ikut</span>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-label">Total Terkumpul</div>
+        <div class="stat-value" id="totalAmount">Rp 0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Total Batu</div>
+        <div class="stat-value" id="totalBatu">0 Batu</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <form id="contribForm">
+        <div class="form-group">
+          <label>Nama</label>
+          <input type="text" id="nameInput" placeholder="Masukkan nama" required>
         </div>
-      </div>
-      <div class="box">
-        <div class="box-icon">💵</div>
-        <div class="box-info">
-          <span class="num" id="totalMoney">0rb</span>
-          <span class="lbl">Total Terkumpul</span>
+        <div class="form-group">
+          <label>Nominal (Rp)</label>
+          <input type="number" id="amountInput" placeholder="Contoh: 60000" required>
         </div>
-      </div>
+        <button type="submit" class="btn" id="submitBtn">Tambah Patungan</button>
+      </form>
+      <div id="statusMsg" class="status-msg"></div>
     </div>
 
-    <!-- Status Pembelian Batu -->
-    <div class="batu-box">
-      <div class="batu-info">
-        <span class="icon">🧊</span>
-        <span class="batu-text">Pesanan Saat Ini</span>
-      </div>
-      <div class="batu-count" id="batuTotal">ambil 0 batu</div>
+    <div class="card">
+      <h3 style="font-size: 1rem; margin-bottom: 12px;">Daftar Kontributor</h3>
+      <ul class="entry-list" id="entryList"></ul>
     </div>
-
-    <form id="joinForm">
-      <div class="input-group">
-        <input id="nameInput" type="text" placeholder="Isi nama kamu, yuk!" autocomplete="off" required maxlength="40">
-      </div>
-      <div class="input-group">
-        <input id="amountInput" type="number" inputmode="numeric" placeholder="Sumbangan (Rp), misal 20000" min="0" step="1000" required>
-      </div>
-      <button type="submit">Ikut Berbagi & Catat +</button>
-    </form>
-    <div class="status" id="statusMsg"></div>
-
-    <ul id="entryList"></ul>
-    <div class="empty" id="emptyMsg">Belum ada yang isi. Jadi yang pertama!</div>
   </div>
 
-  <footer>
-    isi mki otomatis ji itu totalnya berapa batu mau di pesan
-    <span class="glowing-text">#AloooGanggg</span>
-  </footer>
-</div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-<!-- Firebase Script untuk Database Realtime Online -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // Konfigurasi Database Realtime Publik
-  const firebaseConfig = {
+    const firebaseConfig = {
       databaseURL: "https://link-87521-default-rtdb.asia-southeast1.firebasedatabase.app"
-  };
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const entriesRef = ref(db, 'ballo_entries');
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const entriesRef = ref(db, 'entries');
 
-  function formatRingkas(nominal) {
-    const num = Number(nominal || 0);
-    if (num >= 1000) {
-      const ribuan = num / 1000;
-      return (Number.isInteger(ribuan) ? ribuan : ribuan.toFixed(1)) + 'rb';
-    }
-    return num.toLocaleString('id-ID');
-  }
-
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  // Mendengarkan perubahan data secara REALTIME dari server
-  onValue(entriesRef, (snapshot) => {
-    const data = snapshot.val();
-    const entries = data ? Object.values(data) : [];
-
-    const list = document.getElementById('entryList');
-    const empty = document.getElementById('emptyMsg');
-    
-    list.innerHTML = entries.map(e => `
-      <li>
-        <div class="user-info">
-          <div class="avatar">👤</div>
-          <div class="user-details">
-            <span class="name">${escapeHtml(e.name)}</span>
-            <span class="amount">Rp ${formatRingkas(e.amount)}</span>
-          </div>
-        </div>
-      </li>
-    `).join('');
-
-    empty.style.display = entries.length ? 'none' : 'block';
-    document.getElementById('totalPeople').textContent = entries.length;
-    
-    const total = entries.reduce((s,e)=> s + Number(e.amount||0), 0);
-    document.getElementById('totalMoney').textContent = 'Rp ' + formatRingkas(total);
-
-    const jumlahBatu = Math.floor(total / 60000);
-    document.getElementById('batuTotal').textContent = `ambil ${jumlahBatu} batu`;
-  });
-
-  // Kirim data baru ke database online saat tombol ditekan
-  const form = document.getElementById('joinForm');
-  const statusMsg = document.getElementById('statusMsg');
-
-  form.addEventListener('submit', (ev) => {
-    ev.preventDefault();
+    const form = document.getElementById('contribForm');
     const nameInput = document.getElementById('nameInput');
     const amountInput = document.getElementById('amountInput');
-    const name = nameInput.value.trim();
-    const amount = Number(amountInput.value);
+    const entryList = document.getElementById('entryList');
+    const totalAmountEl = document.getElementById('totalAmount');
+    const totalBatuEl = document.getElementById('totalBatu');
+    const statusMsg = document.getElementById('statusMsg');
 
-    if(!name || !(amount >= 0)){
-      statusMsg.textContent = 'Isi nama dan nominal dengan benar ya.';
-      statusMsg.classList.add('err');
-      return;
-    }
+    let editKey = null;
 
-    push(entriesRef, {
-      name: name,
-      amount: amount,
-      timestamp: Date.now()
-    }).then(() => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = nameInput.value.trim();
+      const amount = Number(amountInput.value);
+
+      if (!name || amount <= 0) return;
+
+      if (editKey) {
+        // Update data
+        update(ref(db, `entries/${editKey}`), { name, amount })
+          .then(() => {
+            resetForm();
+            statusMsg.textContent = 'Data berhasil diubah!';
+          });
+      } else {
+        // Tambah data baru
+        push(entriesRef, { name, amount, timestamp: Date.now() })
+          .then(() => {
+            resetForm();
+            statusMsg.textContent = 'Berhasil ditambahkan!';
+          });
+      }
+    });
+
+    function resetForm() {
       nameInput.value = '';
       amountInput.value = '';
-      statusMsg.classList.remove('err');
-      statusMsg.textContent = 'Berhasil dicatat secara live!';
+      editKey = null;
+      document.getElementById('submitBtn').textContent = 'Tambah Patungan';
       setTimeout(() => { statusMsg.textContent = ''; }, 3000);
-    }).catch(() => {
-      statusMsg.textContent = 'Gagal menyimpan ke server.';
-      statusMsg.classList.add('err');
-    });
-  });
-</script>
+    }
 
+    // Read Realtime Data
+    onValue(entriesRef, (snapshot) => {
+      entryList.innerHTML = '';
+      let total = 0;
+      const data = snapshot.val();
+
+      if (data) {
+        Object.keys(data).forEach((key) => {
+          const item = data[key];
+          total += item.amount;
+
+          const li = document.createElement('li');
+          li.className = 'entry-item';
+          li.innerHTML = `
+            <div class="entry-info">
+              <span class="entry-name">${item.name}</span>
+              <span class="entry-amount">Rp ${item.amount.toLocaleString('id-ID')}</span>
+            </div>
+            <div class="actions">
+              <button class="btn-sm btn-edit" onclick="startEdit('${key}', '${item.name}', ${item.amount})">Edit</button>
+              <button class="btn-sm btn-delete" onclick="deleteEntry('${key}')">Hapus</button>
+            </div>
+          `;
+          entryList.appendChild(li);
+        });
+      }
+
+      totalAmountEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+      const batu = (total / 60000).toFixed(1);
+      totalBatuEl.textContent = `${batu} Batu`;
+    });
+
+    // Global Window Functions for Inline Onclick
+    window.deleteEntry = (key) => {
+      if (confirm('Yakin mau menghapus nama ini?')) {
+        remove(ref(db, `entries/${key}`));
+      }
+    };
+
+    window.startEdit = (key, name, amount) => {
+      nameInput.value = name;
+      amountInput.value = amount;
+      editKey = key;
+      document.getElementById('submitBtn').textContent = 'Simpan Perubahan';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
 </body>
 </html>
